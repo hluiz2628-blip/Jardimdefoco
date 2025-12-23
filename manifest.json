@@ -1,7 +1,7 @@
 {
-  "name": "Jardim de Foco",
-  "short_name": "Jardim de Foco",
-  "description": "Um jardim isométrico para ajudar no seu foco.",
+  "name": "Garden Focus",
+  "short_name": "Garden Focus",
+  "description": "Um jardim para ajudar no seu foco.",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
