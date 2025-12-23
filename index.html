@@ -131,7 +131,100 @@ body.debug-plots-grudados .plot {
     font-size: 45px !important;
 }
 
+/* NOVO: Estilos para modo 10x10 */
+body.grid-10x10 #jardim {
+    grid-template-columns: repeat(10, 35px) !important;
+    gap: 5px !important;
+}
 
+body.grid-10x10 .plot {
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 8px !important;
+    font-size: 18px !important;
+}
+
+body.grid-10x10.debug-plots-grudados #jardim {
+    grid-template-columns: repeat(10, 45px) !important;
+}
+
+body.grid-10x10.debug-plots-grudados .plot {
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 22px !important;
+}
+
+/* Ajustes para 3D 10x10 */
+body.grid-10x10 .cell-3d {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+body.grid-10x10 .emoji-3d {
+    font-size: 30px !important;
+    transform: rotateZ(-45deg) rotateX(-90deg) translateY(-15px) scaleY(1) !important;
+}
+
+/* Ajuste de altura para 3D 10x10 */
+body.grid-10x10 #jardim3D {
+    height: 500px !important;
+}
+
+/* Ajustes responsivos para mobile 10x10 */
+@media (max-width: 899px) {
+    body.grid-10x10 #jardim {
+        grid-template-columns: repeat(10, 28px) !important;
+        gap: 3px !important;
+    }
+    
+    body.grid-10x10 .plot {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 14px !important;
+    }
+    
+    body.grid-10x10 #jardim3D {
+        height: 400px !important;
+    }
+    
+    body.grid-10x10 .cell-3d {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    
+    body.grid-10x10 .emoji-3d {
+        font-size: 24px !important;
+        transform: rotateZ(-45deg) rotateX(-90deg) translateY(-12px) scaleY(1) !important;
+    }
+}
+
+/* Desktop 10x10 */
+@media (min-width: 900px) {
+    body.grid-10x10 #jardim {
+        grid-template-columns: repeat(10, 40px) !important;
+        gap: 8px !important;
+    }
+    
+    body.grid-10x10 .plot {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 20px !important;
+    }
+    
+    body.grid-10x10 #jardim3D {
+        height: 550px !important;
+    }
+    
+    body.grid-10x10 .cell-3d {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    body.grid-10x10 .emoji-3d {
+        font-size: 35px !important;
+        transform: rotateZ(-45deg) rotateX(-90deg) translateY(-18px) scaleY(1) !important;
+    }
+}
 
 /* SOMBRA NOS EMOJIS - PRETA E MELHOR VISIBILIDADE */
 body.debug-plots-grudados .plot span {
@@ -631,6 +724,7 @@ button.cancelar { background:#e57373; }
     transition: transform 1.2s ease-in-out;
     position: relative;
     z-index: 2;
+margin-bottom: 20px;
 }
 .plot { 
     width:55px; 
@@ -1569,6 +1663,10 @@ body.natal-mode .cell-3d {
             <button onclick="addMaxStarsTest()" style="background: var(--accent); color: #333;">Adicionar 5 Estrelas no Céu</button>
             <button onclick="simularSucessosTest()" style="background: var(--primary);">Gerar Histórico (Ativar Relatório)</button>
             <button onclick="toggleDebugPlotsGrudados()" style="background: #795548;">Plots Grudados (Modo Debug)</button>
+            <!-- NOVO: Botão para alternar entre 5x5 e 10x10 -->
+            <button onclick="toggleGrid10x10()" style="background: #9c27b0; color: white;" id="btnGrid10x10">
+                Grid 10x10 (Modo Debug)
+            </button>
             <button onclick="fecharModal('debugOverlay')" style="background:#999;">Fechar Debug</button>
         </div>
     </div>
@@ -1686,6 +1784,29 @@ body.natal-mode .cell-3d {
             </div>
         </div>
         
+        <!-- NOVA SEÇÃO: VISUALIZAÇÃO -->
+        <h3 style="margin-top: 20px; margin-bottom: 10px; color: var(--text-main);">VISUALIZAÇÃO</h3>
+        <div class="config-grid">
+            <div class="config-card">
+                <h4>🌐 3D/2D</h4>
+                <div class="ios-switch-container">
+                    <div id="btn3DToggle" class="ios-switch" onclick="toggleModo3D()">
+                        <div class="ios-switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="config-card">
+                <h4>🔳 10x10</h4>
+                <div class="ios-switch-container">
+                    <div id="btnGrid10x10Toggle" class="ios-switch" onclick="toggleGrid10x10()">
+                        <div class="ios-switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; font-size: 10px; color: var(--text-secondary); margin-top: 5px;">uso experimental apenas</div>
+        
         <!-- BOTÃO DE TUTORIAL -->
         <button onclick="iniciarTutorial()" style="width:100%; background: #9c27b0; color: white; margin-bottom: 15px; border-radius: 14px; font-weight: bold; padding: 12px;">📖 Repetir Tutorial</button>
         
@@ -1740,7 +1861,7 @@ body.natal-mode .cell-3d {
 
 
 <div id="abaEsquerda">
-    <h1 style="text-align: center; margin-bottom: 10px; color: var(--primary); cursor: pointer;" onclick="acessarDebugViaTitulo()">Garden Focus</h1>
+    <h1 style="text-align: center; margin-bottom: 10px; color: var(--primary); cursor: pointer; margin-top: 10px" onclick="acessarDebugViaTitulo()">Garden Focus</h1>
     <h3 id="saudacaoUsuario" style="text-align: center; margin-bottom: 5px;">Olá!</h3>
     <input type="file" id="profilePhotoInput" accept="image/*" style="display:none">
     <div id="profilePhotoContainer" onclick="document.getElementById('profilePhotoInput').click()">
@@ -1753,8 +1874,8 @@ body.natal-mode .cell-3d {
         💰 Moedas: <span id="userMoedas">0</span>
     </div>
     
-    <button id="btnToggle3D" onclick="toggleModo3D()" style="width: 100%; margin-bottom: 10px;">🌐 3D</button>
-
+    <!-- BOTÃO 3D REMOVIDO DAQUI -->
+    
     <button onclick="abrirLoja()" style="width:100%; background: #daa520; color: white; margin-bottom:10px;">🛒 Loja do Jardim</button>
     <button onclick="abrirDashboard()" style="width:100%; background: #2196f3; color: white; margin-bottom:10px;">📊 Painel de Foco</button>
     <button onclick="abrirEstante()" style="width:100%; background: #8d6e63; color: white; margin-bottom:10px;">📚 Minha Estante</button>
@@ -1868,7 +1989,8 @@ const StorageSeguro = {
             'moedasFoco': localStorage.getItem('moedasFoco'),
             'historico_foco': localStorage.getItem('historico_foco'),
             'streakDiasAtivos': localStorage.getItem('streakDiasAtivos'),
-            'modo3D': localStorage.getItem('modo3D')
+            'modo3D': localStorage.getItem('modo3D'),
+            'grid10x10': localStorage.getItem('grid10x10') // NOVO: adicionado
         };
         
         localStorage.clear();
@@ -1880,8 +2002,6 @@ const StorageSeguro = {
         });
     }
 };
-
-
 
 // =========================
 // FUNÇÕES PARA PRIMEIRO USO
@@ -2330,9 +2450,6 @@ class AudioManager {
     }
 }
 
-
-
-
 const ITENS_PADRAO = ['🌲','🌳','🌴','🌵','🌾','🌿','☘️','🌻','🌹','🌷','🍄','🍄‍🟫','⛰️','🏠','🏯','🏰','⛪️','⛩️','🪴','⛲️','🪨','🕌','🛕','🗼','🌈','🪧','🗿'];
 const ITENS_NATAL = ['🎄','🎁','🎅','🤶','⛄','❄️','🦌','🕯️','🔔','🍪','🥛','🍬','🥧','🧣','🧤'];
 const ITENS_MEDIEVAL = ['🏰','🏯','⚔️','🛡️','👑','📜','🍺','🍞','🍗','🕯️','🛖','⛺','🏹','🏇','🐲','🔥'];
@@ -2402,17 +2519,113 @@ let corLivroTemp = CORES_LIVROS[0];
 let sinoAtivo = StorageSeguro.get('sinoAtivo', true);
 let temaAutomaticoAtivo = StorageSeguro.get('temaAutoAtivo', true);
 let mostrarAvisoInicio = StorageSeguro.get('mostrarAvisoInicio', true);
-// NOVO: Configuração para previsão
 let mostrarPrevisao = StorageSeguro.get('mostrarPrevisao', true);
-// NOVO: Modo debug plots grudados
 let modoDebugPlotsGrudados = StorageSeguro.get('modoDebugPlotsGrudados', false);
-// NOVO: Modo 3D
-let modo3D = StorageSeguro.set('modo3D', false);
+let modo3D = StorageSeguro.get('modo3D', false);
 let aviso3DJaVisto = StorageSeguro.get('aviso3DJaVisto', false);
+// NOVO: Modo grid 10x10
+let grid10x10 = StorageSeguro.get('grid10x10', false);
 
-// =========================
-// FUNÇÕES PRINCIPAIS
-// =========================
+// Função para obter o tamanho atual do grid
+function getGridSize() {
+    return grid10x10 ? 10 : 5;
+}
+
+// Função para obter o número total de células
+function getTotalCells() {
+    const size = getGridSize();
+    return size * size;
+}
+
+// Função para inicializar o jardimData com o tamanho correto
+function initJardimData() {
+    const totalCells = getTotalCells();
+    
+    // Se o jardimData não existe ou tem tamanho diferente do atual
+    if (!jardimData || jardimData.length !== totalCells) {
+        // Se está mudando para 10x10 e tinha dados 5x5
+        if (grid10x10 && jardimData && jardimData.length === 25) {
+            // Expande de 5x5 para 10x10, mantendo as plantas existentes nas posições correspondentes
+            const newJardimData = Array(totalCells).fill(null);
+            
+            // Mapear posições 5x5 para 10x10 (escalar por 2)
+            for (let y = 0; y < 5; y++) {
+                for (let x = 0; x < 5; x++) {
+                    const oldIndex = y * 5 + x;
+                    const newIndex = (y * 2) * 10 + (x * 2);
+                    if (jardimData[oldIndex]) {
+                        newJardimData[newIndex] = jardimData[oldIndex];
+                    }
+                }
+            }
+            
+            jardimData = newJardimData;
+        } 
+        // Se está mudando para 5x5 e tinha dados 10x10
+        else if (!grid10x10 && jardimData && jardimData.length === 100) {
+            // Reduz de 10x10 para 5x5, mantendo apenas as plantas nas posições correspondentes
+            const newJardimData = Array(25).fill(null);
+            
+            // Mapear posições 10x10 para 5x5 (reduzir por 2)
+            for (let y = 0; y < 10; y += 2) {
+                for (let x = 0; x < 10; x += 2) {
+                    const oldIndex = y * 10 + x;
+                    const newIndex = (y / 2) * 5 + (x / 2);
+                    if (jardimData[oldIndex]) {
+                        newJardimData[newIndex] = jardimData[oldIndex];
+                    }
+                }
+            }
+            
+            jardimData = newJardimData;
+        } 
+        // Se não tinha dados ou tamanho não corresponde
+        else {
+            jardimData = Array(totalCells).fill(null);
+        }
+        
+        StorageSeguro.set('jardim', jardimData);
+    }
+}
+
+// NOVO: Função para alternar entre grid 5x5 e 10x10
+function toggleGrid10x10() {
+    grid10x10 = !grid10x10;
+    StorageSeguro.set('grid10x10', grid10x10);
+    
+    // Aplicar/remover classe CSS
+    if (grid10x10) {
+        document.body.classList.add('grid-10x10');
+    } else {
+        document.body.classList.remove('grid-10x10');
+    }
+    
+    // Atualizar o texto do botão no modal de debug
+    const debugOverlay = document.getElementById('debugOverlay');
+    if (debugOverlay.style.display === 'flex') {
+        const btn = document.getElementById('btnGrid10x10');
+        if (btn) {
+            btn.textContent = `Grid ${grid10x10 ? '5x5' : '10x10'} (Modo Debug)`;
+        }
+    }
+    
+    // NOVO: Atualizar o estado do botão na configuração
+    const btnGrid10x10Config = document.getElementById('btnGrid10x10Toggle');
+    if (btnGrid10x10Config) {
+        btnGrid10x10Config.classList.toggle('on', grid10x10);
+    }
+    
+    // Reinicializar o jardimData com o novo tamanho
+    initJardimData();
+    
+    // Re-renderizar o jardim
+    renderJardim();
+    
+    showModal({ 
+        text: `Grid alterado para ${getGridSize()}x${getGridSize()}!<br><br>O jardim foi ${grid10x10 ? 'expandido' : 'reduzido'} e as plantas foram reposicionados.`, 
+        onConfirm: () => {} 
+    });
+}
 
 function mostrarInfoEstante() {
     const LIVROS_POR_ANDAR = 12;
@@ -2472,7 +2685,6 @@ let tutorialAtual = 0;
 let tutorialAtivo = false;
 
 function iniciarTutorial() {
-    // Fechar modal de configurações se estiver aberto
     fecharModal('configOverlay');
     fecharModal('firstTimeOverlay');
     
@@ -2510,13 +2722,11 @@ function mostrarPassoTutorial() {
     const nextBtn = document.getElementById('tutorialNextBtn');
     const stepCounter = document.getElementById('tutorialStepCounter');
     
-    // Atualizar conteúdo
     icon.textContent = step.icon;
     title.textContent = step.title;
     text.innerHTML = step.text;
     stepCounter.textContent = `Passo ${tutorialAtual + 1} de ${TUTORIAL_STEPS.length}`;
     
-    // Mostrar ou esconder localização
     if (step.location) {
         locationDiv.style.display = 'flex';
         locationText.innerHTML = step.location;
@@ -2524,11 +2734,9 @@ function mostrarPassoTutorial() {
         locationDiv.style.display = 'none';
     }
     
-    // Atualizar botões
     prevBtn.style.display = tutorialAtual === 0 ? 'none' : 'block';
     nextBtn.textContent = tutorialAtual === TUTORIAL_STEPS.length - 1 ? 'Concluir' : 'Próximo';
     
-    // Atualizar progresso
     renderizarProgressoTutorial();
 }
 
@@ -2557,7 +2765,6 @@ function finalizarTutorial() {
     const overlay = document.getElementById('tutorialOverlay');
     overlay.style.display = 'none';
     
-    // Marcar tutorial como visto
     StorageSeguro.set('tutorialVisto', true);
 }
 
@@ -2566,16 +2773,11 @@ function verificarPrimeiroAcesso() {
     const nomeUsuario = StorageSeguro.get('jogadorNome', null);
     
     if (!tutorialVisto && nomeUsuario) {
-        // Usuário já passou pelo primeiro acesso mas não viu o tutorial
         setTimeout(() => {
             iniciarTutorial();
         }, 500);
     }
 }
-
-// =========================
-// FUNÇÕES DE UTILIDADE
-// =========================
 
 function toggleModo3D() {
     if (!modo3D && !aviso3DJaVisto) {
@@ -2586,7 +2788,13 @@ function toggleModo3D() {
     modo3D = !modo3D;
     StorageSeguro.set('modo3D', modo3D);
     atualizarVisibilidadeModo3D();
-    renderJardim(); // Re-renderiza no modo atual
+    renderJardim();
+    
+    // Atualizar o estado do botão na configuração
+    const btn3DConfig = document.getElementById('btn3DToggle');
+    if (btn3DConfig) {
+        btn3DConfig.classList.toggle('on', modo3D);
+    }
 }
 
 function abrirAviso3D() {
@@ -2598,30 +2806,28 @@ function fecharAviso3D() {
     aviso3DJaVisto = true;
     StorageSeguro.set('aviso3DJaVisto', true);
     
-    // Continua com a ativação do 3D
     modo3D = true;
     StorageSeguro.set('modo3D', modo3D);
     atualizarVisibilidadeModo3D();
     renderJardim();
+    
+    // Atualizar o estado do botão na configuração
+    const btn3DConfig = document.getElementById('btn3DToggle');
+    if (btn3DConfig) {
+        btn3DConfig.classList.toggle('on', modo3D);
+    }
 }
 
 function atualizarVisibilidadeModo3D() {
-    const btn3D = document.getElementById('btnToggle3D');
     const jardim2D = document.getElementById('jardim');
     const jardim3D = document.getElementById('jardim3D');
     
     if (modo3D) {
         jardim2D.style.display = 'none';
         jardim3D.style.display = 'block';
-        btn3D.textContent = '🌐 2D';
-        btn3D.style.background = 'var(--primary)';
-        btn3D.style.color = 'white';
     } else {
         jardim2D.style.display = 'grid';
         jardim3D.style.display = 'none';
-        btn3D.textContent = '🌐 3D';
-        btn3D.style.background = 'var(--accent)';
-        btn3D.style.color = '#333';
     }
 }
 
@@ -2629,22 +2835,34 @@ function renderJardim3D() {
     const container = document.getElementById('grid3D');
     container.innerHTML = '';
     
-    // Aplicar modo debug plots grudados se estiver ativo
+    const gridSize = getGridSize();
+    const cellSize = grid10x10 ? 40 : 75;
+    const emojiSize = grid10x10 ? 30 : 50;
+    
+    document.documentElement.style.setProperty('--cell-3d-size', `${cellSize}px`);
+    
     if (modoDebugPlotsGrudados) {
-        container.style.gridTemplateColumns = 'repeat(5, 90px)';
-        container.style.gap = '0';
+        if (grid10x10) {
+            container.style.gridTemplateColumns = `repeat(10, 45px)`;
+            container.style.gap = '0';
+        } else {
+            container.style.gridTemplateColumns = `repeat(${gridSize}, 90px)`;
+            container.style.gap = '0';
+        }
         container.style.border = '3px solid var(--primary)';
     } else {
-        container.style.gridTemplateColumns = `repeat(5, var(--cell-3d-size))`;
+        container.style.gridTemplateColumns = `repeat(${gridSize}, var(--cell-3d-size))`;
         container.style.gap = '2px';
         container.style.border = 'none';
     }
+    
+    container.style.gridTemplateColumns = `repeat(${gridSize}, var(--cell-3d-size))`;
+    container.style.gridTemplateRows = `repeat(${gridSize}, var(--cell-3d-size))`;
     
     jardimData.forEach((item, i) => {
         const cell = document.createElement('div');
         cell.className = 'cell-3d' + (i === alvo ? ' alvo' : '');
         
-        // Configurar interatividade
         if (intervalo && i !== alvo) {
             cell.style.pointerEvents = 'none';
             cell.style.opacity = '0.7';
@@ -2653,11 +2871,17 @@ function renderJardim3D() {
             cell.style.opacity = '1';
         }
         
-        // Adicionar planta se existir
         if (item) {
             const emoji = document.createElement('span');
             emoji.className = 'emoji-3d';
             emoji.textContent = item.icone;
+            emoji.style.fontSize = `${emojiSize}px`;
+            
+            if (grid10x10) {
+                emoji.style.transform = 'rotateZ(-45deg) rotateX(-90deg) translateY(-15px) scaleY(1)';
+            } else {
+                emoji.style.transform = 'rotateZ(-45deg) rotateX(-90deg) translateY(-35px) scaleY(1)';
+            }
             
             if (item.emProgresso) {
                 emoji.classList.add('plant-spawn');
@@ -2668,14 +2892,20 @@ function renderJardim3D() {
             
             cell.appendChild(emoji);
         } else if (i === alvo && escolhido && !intervalo) {
-            // Mostrar fantasma da planta pré-selecionada
             const ghost = document.createElement('span');
             ghost.className = 'emoji-3d fantasma';
             ghost.textContent = escolhido;
+            ghost.style.fontSize = `${emojiSize}px`;
+            
+            if (grid10x10) {
+                ghost.style.transform = 'rotateZ(-45deg) rotateX(-90deg) translateY(-15px) scaleY(1)';
+            } else {
+                ghost.style.transform = 'rotateZ(-45deg) rotateX(-90deg) translateY(-35px) scaleY(1)';
+            }
+            
             cell.appendChild(ghost);
         }
         
-        // Evento de clique
         cell.onclick = () => {
             if (intervalo) return;
             
@@ -2689,27 +2919,24 @@ function renderJardim3D() {
         
         container.appendChild(cell);
     });
+    
+    const jardim3D = document.getElementById('jardim3D');
+    if (grid10x10) {
+        jardim3D.style.height = '500px';
+    } else {
+        jardim3D.style.height = '480px';
+    }
 }
 
-// Função para obter emoji de falha baseado no emoji escolhido
 function getFailureEmoji(emoji) {
-    // Plantas específicas
     const plantas = ['🌲','🌳','🌴','🌵','🌾','🌿','☘️','🌻','🌹','🌷','🍄','🍄‍🟫','🪴'];
     const construcoes = ['🏠','🏯','🏰','⛪️','⛩️','🛖','🕌','🛕','🗼'];
     
-    // Caso especial para rosa
     if (emoji === '🌹') return '🥀';
-    
-    // Caso especial para presente
     if (emoji === '🎁') return '🪤';
-    
-    // Caso para construções
     if (construcoes.includes(emoji)) return '🏚';
-    
-    // Caso para plantas gerais
     if (plantas.includes(emoji)) return '🪾';
     
-    // Padrão para outros emojis
     return '🪾';
 }
 
@@ -2801,7 +3028,6 @@ function toggleAnimacaoFundo() {
     StorageSeguro.set('animacaoFundoAtiva', animacaoFundoAtiva);
     
     const btn = document.getElementById('btnAnimFundo');
-    // Atualiza a classe para o estilo iOS-switch
     btn.classList.toggle('on', animacaoFundoAtiva);
     
     if (animacaoFundoAtiva) {
@@ -2842,9 +3068,6 @@ function fecharModal(id) {
     }, 200);
 }
 
-
-
-// Funções para o modal de início de foco
 function openStartFocusModal() {
     document.getElementById('startFocusModalOverlay').style.display = 'flex';
     document.getElementById('startFocusModalContent').classList.add('modal-anim-in');
@@ -2864,7 +3087,6 @@ function closeStartFocusModal(startTimer) {
     }
 }
 
-// NOVO: Função para atualizar botões (incluindo o botão de adicionar manual)
 function atualizarBotoes() {
     const btnStart = document.getElementById('btnStart');
     const btnAdicionarManual = document.getElementById('btnAdicionarManual');
@@ -2872,22 +3094,18 @@ function atualizarBotoes() {
     const btnParar = document.getElementById('btnParar');
     
     if (intervalo) {
-        // Timer rodando
         btnStart.style.display = 'none';
         btnAdicionarManual.style.display = 'none';
         btnDeepFocus.style.display = 'block';
         btnParar.style.display = 'block';
     } else {
-        // Sem timer
         if (alvo !== null) {
-            // Tem alvo selecionado
             btnStart.style.display = 'block';
             btnAdicionarManual.style.display = 'block';
             btnAdicionarManual.disabled = false;
             btnDeepFocus.style.display = 'none';
             btnParar.style.display = 'none';
         } else {
-            // Nenhum alvo selecionado
             btnStart.style.display = 'block';
             btnAdicionarManual.style.display = 'none';
             btnDeepFocus.style.display = 'none';
@@ -2896,15 +3114,12 @@ function atualizarBotoes() {
     }
 }
 
-// NOVO: Função para abrir modal de adicionar foco manual
 function adicionarFocoManual() {
-    // Preenche o modal manual com os dados atuais
     document.getElementById('manualMotivo').textContent = document.getElementById('motivoEscolhido').value;
     document.getElementById('manualTempo').textContent = document.getElementById('tempoEscolhido').value;
     abrirModal('manualFocusOverlay');
 }
 
-// NOVO: Função para confirmar foco manual
 function confirmarFocoManual() {
     const motivo = document.getElementById('motivoEscolhido').value;
     const tempo = parseInt(document.getElementById('tempoEscolhido').value);
@@ -2913,7 +3128,6 @@ function confirmarFocoManual() {
     
     const emojiFinal = evoluirEmoji(escolhido);
     
-    // Adiciona a planta no jardim (completa, sem estágio)
     jardimData[alvo] = { 
         icone: emojiFinal, 
         motivo: motivo, 
@@ -2934,7 +3148,6 @@ function confirmarFocoManual() {
     
     updateMoedas(isLucky ? 2 : 1); 
     
-    // Efeitos visuais
     let plot;
     if (modo3D) {
         const cells = document.querySelectorAll('.cell-3d');
@@ -2950,23 +3163,17 @@ function confirmarFocoManual() {
         setTimeout(() => iconSpan.classList.remove('crescendo'), 500);
     }
     
-    // Resetar alvo e atualizar
     alvo = null;
     atualizarStreak();
     salvarTudo(); 
     renderSelects();
     atualizarBotoes();
     
-    // Fechar o modal
     fecharModal('manualFocusOverlay');
     
-    // Verificar se completou o jardim
-    if(jardimData.filter(x => x !== null).length === 25) triggerFinalSequence();
+    const totalCells = getTotalCells();
+    if(jardimData.filter(x => x !== null).length === totalCells) triggerFinalSequence();
 }
-
-// =========================
-// FUNÇÕES DE BACKUP DE DADOS
-// =========================
 
 function exportarDados() {
     const dadosBackup = {
@@ -2989,14 +3196,15 @@ function exportarDados() {
             exibirEstrelas: StorageSeguro.get('exibirEstrelas', true),
             animacaoFundoAtiva: StorageSeguro.get('animacaoFundoAtiva', true),
             sinoAtivo: StorageSeguro.get('sinoAtivo', true),
-            temaAutoAtivo: StorageSeguro.get('temaAutoAtivo', true),
+            temaAutoAtivo: StorageSeguro.set('temaAutoAtivo', true),
             mostrarAvisoInicio: StorageSeguro.get('mostrarAvisoInicio', true),
             mostrarPrevisao: StorageSeguro.get('mostrarPrevisao', true),
             modoDebugPlotsGrudados: StorageSeguro.get('modoDebugPlotsGrudados', false),
             modo3D: StorageSeguro.get('modo3D', false),
             aviso3DJaVisto: StorageSeguro.get('aviso3DJaVisto', false),
             somAtualIdx: StorageSeguro.get('somAtualIdx', 0),
-            profilePhoto: StorageSeguro.get('profilePhoto', null)
+            profilePhoto: StorageSeguro.get('profilePhoto', null),
+            grid10x10: StorageSeguro.get('grid10x10', false)
         }
     };
     
@@ -3030,7 +3238,6 @@ function importarDados(event) {
         try {
             const dadosImportados = JSON.parse(e.target.result);
             
-            // Validar estrutura do arquivo
             if (!dadosImportados.dados || !dadosImportados.versao) {
                 showModal({ 
                     text: '❌ Arquivo inválido! Este não parece ser um backup do Garden Focus.', 
@@ -3044,7 +3251,6 @@ function importarDados(event) {
                 onConfirm: () => {
                     const dados = dadosImportados.dados;
                     
-                    // Chaves essenciais que DEVEM ser restauradas (dados do usuário)
                     const chavesEssenciais = [
                         'jardim', 
                         'historico_foco', 
@@ -3052,18 +3258,16 @@ function importarDados(event) {
                         'estante_livros', 
                         'sessoesTotais', 
                         'streakDiasAtivos',
-                        'profilePhoto'
+                        'profilePhoto',
+                        'grid10x10'
                     ];
                     
-                    // Restaurar apenas as chaves essenciais
                     chavesEssenciais.forEach(chave => {
                         if (dados[chave] !== null && dados[chave] !== undefined) {
                             StorageSeguro.set(chave, dados[chave]);
                         }
                     });
                     
-                    // Restaurar chaves de configuração que podem ter sido alteradas no backup
-                    // (Ex: medievalComprado, somAtualIdx)
                     if (dados.medievalComprado !== null && dados.medievalComprado !== undefined) {
                         StorageSeguro.set('medievalComprado', dados.medievalComprado);
                     }
@@ -3071,12 +3275,6 @@ function importarDados(event) {
                         StorageSeguro.set('somAtualIdx', dados.somAtualIdx);
                     }
                     
-                    // As chaves de configuração como 'tempos', 'motivos', 'darkMode', etc., 
-                    // NÃO serão restauradas para preservar as configurações atuais do usuário, 
-                    // a menos que o usuário explicitamente queira sobrescrever tudo.
-                    // Para o escopo desta correção, vamos preservar as configurações atuais.
-                    
-                    // Dados importados com sucesso. Recarrega a página para aplicar as alterações.
                     location.reload();
                 }
             });
@@ -3090,14 +3288,8 @@ function importarDados(event) {
     };
     reader.readAsText(file);
     
-    // Limpar o input para permitir selecionar o mesmo arquivo novamente
     event.target.value = '';
 }
-
-// =========================
-// TUTORIAL INTERATIVO (SIMPLIFICADO)
-// =========================
-
 
 function mostrarAjudaBackup() {
     const mensagem = `
@@ -3166,7 +3358,6 @@ function comprarItemLoja(tipo, preco) {
 
 function atualizarTimerDisplay() { document.getElementById('timer').textContent = `${String(document.getElementById('tempoEscolhido').value).padStart(2,'0')}:00`; }
 
-// NOVO: Função para acessar debug via título
 function acessarDebugViaTitulo() {
     promptCustom("Digite a senha de acesso:", false, (v) => {
         if(v === "Luiz") { 
@@ -3210,7 +3401,7 @@ function toggleDeepFocus(active) {
             pararBtn.style.display = 'none';
         }
     }
-    atualizarBotoes(); // NOVO: Atualizar botões após alterar modo foco profundo
+    atualizarBotoes();
 }
 
 function updateMoedas(amount) {
@@ -3229,7 +3420,9 @@ function setLuckyPlant() {
 }
 
 function fillGridTest() {
-    jardimData = Array(25).fill({ icone: '🪴', motivo: 'Teste Debug', lucky: false });
+    const totalCells = getTotalCells();
+    const testEmoji = grid10x10 ? '🪴' : '🪴';
+    jardimData = Array(totalCells).fill({ icone: testEmoji, motivo: 'Teste Debug', lucky: false });
     salvarTudo();
     triggerFinalSequence();
 }
@@ -3257,7 +3450,6 @@ function simularSucessosTest() {
     showModal({ text: "10 sucessos inseridos no histórico!", onConfirm: () => {} });
 }
 
-// NOVO: Função para alternar modo debug plots grudados
 function toggleDebugPlotsGrudados() {
     modoDebugPlotsGrudados = !modoDebugPlotsGrudados;
     StorageSeguro.set('modoDebugPlotsGrudados', modoDebugPlotsGrudados);
@@ -3285,9 +3477,10 @@ function triggerFinalSequence() {
     
     setTimeout(() => {
         showModal({ 
-            text: "🌟 PARABÉNS! Você completou um ciclo de foco! Seu jardim floresceu lindamente e está pronto para novas sementes.", 
+            text: `🌟 PARABÉNS! Você completou um ciclo de foco! Seu jardim ${grid10x10 ? '10x10' : '5x5'} floresceu lindamente e está pronto para novas sementes.`, 
             onConfirm: () => {
-                jardimData = Array(25).fill(null);
+                const totalCells = getTotalCells();
+                jardimData = Array(totalCells).fill(null);
                 grid2D.classList.remove('zoom-out-effect');
                 grid3D.classList.remove('zoom-out-effect');
                 salvarTudo();
@@ -3299,7 +3492,6 @@ function triggerFinalSequence() {
 function calcularPrevisao() {
     const painel = document.getElementById('painelInteligencia');
     
-    // Verificar se a previsão está ativada
     if (!mostrarPrevisao) {
         painel.style.display = 'none';
         return;
@@ -3346,9 +3538,8 @@ function cancelTimer() {
                 document.getElementById('btnDeepFocus').style.display = 'none';
                 document.getElementById('btnStart').style.display = 'block';
                 document.getElementById('btnParar').style.display = 'none';
-                // Removido o modal de lamentação
                 salvarTudo(); renderSelects();
-                atualizarBotoes(); // NOVO: Atualizar botões após cancelar
+                atualizarBotoes();
             }
         }); 
     }
@@ -3358,7 +3549,6 @@ function renderEstrelasNoCeu() {
     const container = document.getElementById('starsContainer');
     container.innerHTML = '';
     
-    // Estrelas ficam visíveis apenas no modo noturno
     const isDarkMode = document.body.classList.contains('dark-mode');
     if(!exibirEstrelas || !isDarkMode) return;
     
@@ -3376,7 +3566,6 @@ function toggleEstrelas() {
     exibirEstrelas = !exibirEstrelas;
     StorageSeguro.set('exibirEstrelas', exibirEstrelas);
     const btn = document.getElementById('btnEstrelas');
-    // Atualiza a classe para o estilo iOS-switch
     btn.classList.toggle('on', exibirEstrelas);
     renderEstrelasNoCeu();
 }
@@ -3402,7 +3591,6 @@ function renderEstante() {
     estanteContainer.style.display = 'flex';
     estanteContainer.style.flexDirection = 'column';
     estanteContainer.style.gap = '0';
-    // Largura ajustada para acomodar 12 livros
     const isMobile = window.innerWidth <= 600;
     estanteContainer.style.width = '100%';
     estanteContainer.style.maxWidth = isMobile ? '100%' : '450px';
@@ -3440,7 +3628,6 @@ function renderEstante() {
             livroDiv.className = 'livro';
             livroDiv.style.backgroundColor = livro.cor;
             livroDiv.style.height = (60 + (indexNoAndar % 3) * 8) + 'px';
-            // Largura ajustada: 32px desktop, 18px mobile
             const isMobile = window.innerWidth <= 600;
             livroDiv.style.width = isMobile ? '18px' : '32px';
             livroDiv.style.marginRight = '-1px';
@@ -3457,7 +3644,6 @@ function renderEstante() {
             const tituloDiv = document.createElement('div');
             tituloDiv.className = 'livro-titulo';
             tituloDiv.textContent = livro.nome;
-            // Tamanho de fonte ajustado: 8px desktop, 6px mobile
             tituloDiv.style.fontSize = isMobile ? '6px' : '8px';
             tituloDiv.style.padding = '3px 0px';
             tituloDiv.style.fontWeight = 'bold';
@@ -3586,7 +3772,6 @@ function mostrarDashboardPeriodo(periodo) {
     }
 }
 
-// NOVO: Função para calcular emoji e motivo mais usado
 function calcularMaisUsado(sessoes) {
     if (sessoes.length === 0) {
         return { icone: "📊", motivo: "Nenhum dado" };
@@ -3596,18 +3781,15 @@ function calcularMaisUsado(sessoes) {
     const contagemMotivos = {};
     
     sessoes.forEach(sessao => {
-        // Contar emojis
         if (sessao.icone) {
             contagemIcones[sessao.icone] = (contagemIcones[sessao.icone] || 0) + 1;
         }
         
-        // Contar motivos
         if (sessao.motivo) {
             contagemMotivos[sessao.motivo] = (contagemMotivos[sessao.motivo] || 0) + 1;
         }
     });
     
-    // Encontrar emoji mais usado
     let iconeMaisUsado = "📊";
     let maxIcones = 0;
     for (const [icone, contagem] of Object.entries(contagemIcones)) {
@@ -3617,7 +3799,6 @@ function calcularMaisUsado(sessoes) {
         }
     }
     
-    // Encontrar motivo mais usado
     let motivoMaisUsado = "Nenhum";
     let maxMotivos = 0;
     for (const [motivo, contagem] of Object.entries(contagemMotivos)) {
@@ -3706,7 +3887,6 @@ function renderizarDashboardSemanal() {
     
     container.innerHTML += resumoHTML;
     
-    // NOVO: Adicionar seção "Mais usado na semana"
     const sessoesSemana = historico.filter(s => {
         const sDate = new Date(s.data);
         sDate.setHours(0, 0, 0, 0);
@@ -3820,7 +4000,6 @@ function renderizarDashboardMensal() {
     
     container.innerHTML += resumoHTML;
     
-    // NOVO: Adicionar seção "Mais usado no mês"
     const sessoesMes = historico.filter(s => {
         if (s.status !== 'sucesso') return false;
         const dataSessao = new Date(s.data);
@@ -3860,7 +4039,6 @@ function renderizarDashboardAnual() {
     const agora = new Date();
     const anoAtual = agora.getFullYear();
     
-    // CORREÇÃO: Array completo de meses
     const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
     const minutosPorMes = Array(12).fill(0);
     
@@ -3918,7 +4096,6 @@ function renderizarDashboardAnual() {
         container.appendChild(mesElement);
     });
     
-    // NOVO: Adicionar seção "Mais usado no ano"
     const sessoesAno = historico.filter(s => {
         if (s.status !== 'sucesso') return false;
         const dataSessao = new Date(s.data);
@@ -3994,25 +4171,21 @@ function startTimer() {
     }
     if(intervalo) return; 
     
-    // Solicitar permissão de notificação ao clicar em iniciar (requer interação do usuário)
     solicitarPermissaoNotificacao();
     
     document.getElementById('painelInteligencia').style.display = 'none'; 
     document.getElementById('btnStart').style.display = 'none';
     document.getElementById('btnDeepFocus').style.display = 'block';
     document.getElementById('btnParar').style.display = 'block';
-    atualizarBotoes(); // NOVO: Atualizar botões
+    atualizarBotoes();
     
-    // Se o usuário optou por não ver o aviso, inicia o timer diretamente
     if (!mostrarAvisoInicio) {
         iniciarTimer();
     } else {
-        // Caso contrário, mostra o modal com a opção de não mostrar mais
         openStartFocusModal();
     }
 }
 
-// Função para solicitar permissão de notificação
 function solicitarPermissaoNotificacao() {
     if ('Notification' in window) {
         if (Notification.permission === 'default') {
@@ -4023,7 +4196,6 @@ function solicitarPermissaoNotificacao() {
     }
 }
 
-// Função para enviar notificação quando a planta crescer
 function enviarNotificacaoPlantaCresceu() {
     if ('Notification' in window && Notification.permission === 'granted') {
         try {
@@ -4040,7 +4212,6 @@ function enviarNotificacaoPlantaCresceu() {
                 notificacao.close();
             };
         } catch (e) {
-            // Fallback para Service Worker em dispositivos móveis
             if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
                 navigator.serviceWorker.ready.then(function(registration) {
                     registration.showNotification('🌱 Garden Focus', {
@@ -4076,11 +4247,10 @@ function iniciarTimer() {
         document.getElementById('timer').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; 
         if(tempo <= 0) finalizarFoco(); 
     }, 1000); 
-    atualizarBotoes(); // NOVO: Atualizar botões após iniciar timer
+    atualizarBotoes();
 }
 
 function finalizarFoco() { 
-    // Enviar notificação quando o foco terminar
     enviarNotificacaoPlantaCresceu();
     
     const tempoMin = parseInt(document.getElementById('tempoEscolhido').value); 
@@ -4137,9 +4307,10 @@ function finalizarFoco() {
     atualizarStreak();
     salvarTudo(); 
     renderSelects();
-    atualizarBotoes(); // NOVO: Atualizar botões após finalizar
+    atualizarBotoes();
     
-    if(jardimData.filter(x => x !== null).length === 25) triggerFinalSequence();
+    const totalCells = getTotalCells();
+    if(jardimData.filter(x => x !== null).length === totalCells) triggerFinalSequence();
 }
 
 function toggleNatal() { 
@@ -4151,7 +4322,6 @@ function toggleNatal() {
     escolhido = (modoNatal ? ITENS_NATAL : (modoMedieval ? ITENS_MEDIEVAL : ITENS_PADRAO))[0]; 
     setLuckyPlant(); 
     const btn = document.getElementById('btnNatal');
-    // Atualiza a classe para o estilo iOS-switch
     btn.classList.toggle('on', modoNatal);
 }
 
@@ -4164,7 +4334,6 @@ function toggleMedieval() {
     escolhido = (modoMedieval ? ITENS_MEDIEVAL : (modoNatal ? ITENS_NATAL : ITENS_PADRAO))[0];
     setLuckyPlant(); 
     const btn = document.getElementById('btnMedievalConfig');
-    // Atualiza a classe para o estilo iOS-switch
     btn.classList.toggle('on', modoMedieval);
 }
 
@@ -4208,18 +4377,33 @@ function renderJardim2D() {
     const c = document.getElementById('jardim');
     c.innerHTML = '';
     
-    // Aplicar modo debug plots grudados se estiver ativo
+    const gridSize = getGridSize();
+    const cellSize = grid10x10 ? 35 : 55;
+    const fontSize = grid10x10 ? 18 : 28;
+    
     if (modoDebugPlotsGrudados) {
         document.body.classList.add('debug-plots-grudados');
+        if (grid10x10) {
+            c.style.gridTemplateColumns = `repeat(10, 45px) !important`;
+            c.style.gap = '0 !important';
+        }
     } else {
         document.body.classList.remove('debug-plots-grudados');
+        c.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
+        c.style.gap = grid10x10 ? '5px' : '10px';
     }
     
     jardimData.forEach((item, i) => {
         let d = document.createElement('div');
         d.className = 'plot' + (i === alvo ? ' alvo' : '');
+        d.style.width = `${cellSize}px`;
+        d.style.height = `${cellSize}px`;
+        d.style.fontSize = `${fontSize}px`;
         
-        // NOVO: Adicionar classe de fantasma apenas ao emoji, não ao plot
+        if (grid10x10) {
+            d.style.borderRadius = '8px';
+        }
+        
         let temFantasma = false;
         
         if (intervalo && i !== alvo) {
@@ -4243,7 +4427,6 @@ function renderJardim2D() {
             
             d.appendChild(span);
         } else if (i === alvo && escolhido && !intervalo) {
-            // NOVO: Mostrar fantasma da planta pré-selecionada (apenas o emoji)
             let span = document.createElement('span');
             span.textContent = escolhido;
             span.classList.add('plot-emoji-fantasma');
@@ -4288,7 +4471,7 @@ function abrirModalPlanta(index) {
             escolhido = i; 
             fecharModal('modalPlantaOverlay'); 
             renderJardim(); 
-            atualizarBotoes(); // NOVO: Atualizar botões após escolher planta
+            atualizarBotoes();
         }; 
         p.appendChild(d); 
     }); 
@@ -4304,7 +4487,7 @@ function abrirModalPlanta(index) {
                 escolhido = i; 
                 fecharModal('modalPlantaOverlay'); 
                 renderJardim(); 
-                atualizarBotoes(); // NOVO: Atualizar botões após escolher planta
+                atualizarBotoes();
             }; 
             pe.appendChild(d);
         });
@@ -4317,8 +4500,8 @@ function salvarTudo() {
     StorageSeguro.set('jardim', jardimData); 
     StorageSeguro.set('sessoesTotais', sessoesTotais); 
     StorageSeguro.set('historico_foco', historico); 
-    StorageSeguro.set('modo3D', modo3D); // Salvar preferência 3D
-    renderJardim(); // Isso agora renderiza no modo atual (2D ou 3D)
+    StorageSeguro.set('modo3D', modo3D);
+    renderJardim();
 }
 
 function renderSelects() { 
@@ -4341,10 +4524,8 @@ function renderTodos() {
 function addTodo() { let i = document.getElementById('novoTodo'); if(i.value.trim()){ todos.push({texto:i.value, done:false}); i.value=''; renderTodos(); } }
 
 function abrirConfig() { 
-    // A função atualizarBotoesConfig() garante que o estado visual dos toggles esteja correto.
     atualizarBotoesConfig();
     
-    // Lógica específica que não está em atualizarBotoesConfig()
     if(medievalComprado) {
         const btnMedieval = document.getElementById('btnMedievalConfig');
         if (btnMedieval) {
@@ -4366,7 +4547,6 @@ function melhorarAcessibilidade() {
     
     document.getElementById('abrirMenuBtn').setAttribute('aria-label', 'Abrir menu');
     document.getElementById('btnTema').setAttribute('aria-label', 'Alternar tema claro/escuro');
-    document.getElementById('btnToggle3D').setAttribute('aria-label', 'Alternar entre modo 2D e 3D');
     
     document.querySelectorAll('.plot').forEach((plot, i) => {
         if (!plot.getAttribute('aria-label')) {
@@ -4381,66 +4561,66 @@ function melhorarAcessibilidade() {
 }
 
 function atualizarBotoesConfig() {
-    // 1. Sino
     const btnSino = document.getElementById('btnSino');
     if (btnSino) {
         btnSino.classList.toggle('on', sinoAtivo);
     }
 
-    // 2. Auto Tema
     const btnTemaAuto = document.getElementById('btnTemaAuto');
     if (btnTemaAuto) {
         btnTemaAuto.classList.toggle('on', temaAutomaticoAtivo);
     }
 
-    // 3. Natal
     const btnNatal = document.getElementById('btnNatal');
     if (btnNatal) {
         btnNatal.classList.toggle('on', modoNatal);
     }
 
-    // 4. Medieval
     const btnMedieval = document.getElementById('btnMedievalConfig');
     if (btnMedieval) {
         btnMedieval.classList.toggle('on', modoMedieval);
     }
 
-    // 5. Estrelas
     const btnEstrelas = document.getElementById('btnEstrelas');
     if (btnEstrelas) {
         btnEstrelas.classList.toggle('on', exibirEstrelas);
     }
 
-    // 6. Anim. Fundo
     const btnAnimFundo = document.getElementById('btnAnimFundo');
     if (btnAnimFundo) {
         btnAnimFundo.classList.toggle('on', animacaoFundoAtiva);
     }
 
-    // 7. Previsão
     const btnPrevisao = document.getElementById('btnPrevisao');
     if (btnPrevisao) {
         btnPrevisao.classList.toggle('on', mostrarPrevisao);
     }
+
+    // Atualizar os botões da seção Visualização
+    const btn3D = document.getElementById('btn3DToggle');
+    if (btn3D) {
+        btn3D.classList.toggle('on', modo3D);
+    }
+
+    const btnGrid10x10 = document.getElementById('btnGrid10x10Toggle');
+    if (btnGrid10x10) {
+        btnGrid10x10.classList.toggle('on', grid10x10);
+    }
 }
 
 function init() { 
-    // Verificar se é o primeiro uso
     const vistoPrimeiroUso = StorageSeguro.get('vistoPrimeiroUso', false);
     let nome = StorageSeguro.get('jogadorNome');
     
     if (!vistoPrimeiroUso) {
-        // Primeiro uso - mostrar popup de introdução
         setTimeout(() => {
             mostrarPrimeiroUso();
         }, 500);
-        return; // Não continuar com o resto do init
+        return;
     }
     
-    // NOVO: Verificar se deve mostrar o tutorial
     verificarPrimeiroAcesso();
     
-    // Se já viu o primeiro uso mas não tem nome, pedir o nome
     if(!nome) {
         showModal({
             text: "Bem-vindo ao Garden Focus! 🌱\n\nQual é o seu nome?",
@@ -4455,28 +4635,28 @@ function init() {
         return;
     }
     
-    // Usuário já tem nome e já viu o primeiro uso - continuar com init normal
     document.getElementById('saudacaoUsuario').innerHTML = `Olá, ${nome}!`;
     
-    // Carregar foto de perfil salva
     carregarFotoPerfil();
     
     if(StorageSeguro.get('darkMode', 'false') === 'true') document.body.classList.add('dark-mode'); 
     
-    // Atualiza o estado visual de todos os botões de configuração
     atualizarBotoesConfig();
     
     document.getElementById('userMoedas').textContent = totalMoedas;
     
-    // Aplicar modo debug plots grudados se estiver ativo
     if (modoDebugPlotsGrudados) {
         document.body.classList.add('debug-plots-grudados');
     }
     
-    // Inicializar modo 3D
+    if (grid10x10) {
+        document.body.classList.add('grid-10x10');
+    }
+    
+    initJardimData();
+    
     atualizarVisibilidadeModo3D();
     
-    // Iniciar sistema de partículas
     particulasManager.iniciar();
     
     audioManager.init();
@@ -4485,15 +4665,13 @@ function init() {
     renderEstante(); renderEstrelasNoCeu(); setupEstrelasClick();
     verificarTemaAutomatico();
     
-    // Calcular previsão inicial
     calcularPrevisao();
     
     atualizarStreak();
-    atualizarBotoes(); // NOVO: Inicializar estado dos botões
+    atualizarBotoes();
     
     melhorarAcessibilidade();
     
-    // Verificar se deve mostrar o tutorial
     const tutorialVisto = StorageSeguro.get('tutorialVisto', false);
     if (!tutorialVisto) {
         setTimeout(() => {
@@ -4519,7 +4697,6 @@ function promptCustom(msg, size, cb) { showModal({ text: msg, showInput: true, o
 function addTempo(v) { tempos.push(v); StorageSeguro.set('tempos', tempos); renderSelects(); }
 function addMotivo(v) { motivos.push(v); StorageSeguro.set('motivos', motivos); renderSelects(); }
 
-// FUNÇÕES DE FOTO DE PERFIL
 function carregarFotoPerfil() {
     const fotoSalva = StorageSeguro.get('profilePhoto', null);
     if (fotoSalva) {
@@ -4580,15 +4757,7 @@ function toggleSino() {
     sinoAtivo = !sinoAtivo;
     StorageSeguro.set('sinoAtivo', sinoAtivo);
     
-    // Atualiza a classe para o estilo iOS-switch
     btn.classList.toggle('on', sinoAtivo);
-}
-
-// Função original renomeada para evitar conflito, mas não é mais chamada pelo HTML
-function salvarConfigSonsAntigo() { 
-    // Esta função era chamada pelo checkbox, mas agora usamos toggleSino()
-    // sinoAtivo = document.getElementById('checkSino').checked; 
-    // StorageSeguro.set('sinoAtivo', sinoAtivo); 
 }
 
 function toggleTemaAuto() {
@@ -4596,7 +4765,6 @@ function toggleTemaAuto() {
     temaAutomaticoAtivo = !temaAutomaticoAtivo;
     StorageSeguro.set('temaAutoAtivo', temaAutomaticoAtivo);
     
-    // Atualiza a classe para o estilo iOS-switch
     btn.classList.toggle('on', temaAutomaticoAtivo);
     
     if (temaAutomaticoAtivo) {
@@ -4604,34 +4772,14 @@ function toggleTemaAuto() {
     }
 }
 
-// Função original renomeada para evitar conflito, mas não é mais chamada pelo HTML
-function salvarConfigTemaAutoAntigo() {
-    // Esta função era chamada pelo checkbox, mas agora usamos toggleTemaAuto()
-    // temaAutomaticoAtivo = document.getElementById('checkTemaAuto').checked;
-    // StorageSeguro.set('temaAutoAtivo', temaAutomaticoAtivo);
-    // if (temaAutomaticoAtivo) {
-    //     verificarTemaAutomatico();
-    // }
-}
-
-// NOVO: Função para salvar configuração da previsão
 function togglePrevisao() {
     const btn = document.getElementById('btnPrevisao');
     mostrarPrevisao = !mostrarPrevisao;
     StorageSeguro.set('mostrarPrevisao', mostrarPrevisao);
     
-    // Atualiza a classe para o estilo iOS-switch
     btn.classList.toggle('on', mostrarPrevisao);
     
-    calcularPrevisao(); // Recalcular para atualizar a exibição
-}
-
-// Função original renomeada para evitar conflito, mas não é mais chamada pelo HTML
-function salvarConfigPrevisaoAntigo() {
-    // Esta função era chamada pelo checkbox, mas agora usamos togglePrevisao()
-    // mostrarPrevisao = document.getElementById('checkPrevisao').checked;
-    // StorageSeguro.set('mostrarPrevisao', mostrarPrevisao);
-    // calcularPrevisao(); // Recalcular para atualizar a exibição
+    calcularPrevisao();
 }
 
 function verificarTemaAutomatico() {
@@ -4671,7 +4819,6 @@ window.addEventListener('beforeunload', () => {
 init();
 setInterval(verificarTemaAutomatico, 60000);
 
-// ADICIONE ESTE BLOCO NO FINAL DO SCRIPT
 if ('serviceWorker' in navigator) {
 window.addEventListener('load', () => {
 navigator.serviceWorker.register('sw.js')
