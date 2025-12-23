@@ -1,4 +1,4 @@
-const CACHE_NAME = 'garden-focus'; // Versão nova
+const CACHE_NAME = 'garden-focus-v1'; // Versão nova
 const ASSETS = [
   './',
   './index.html',
