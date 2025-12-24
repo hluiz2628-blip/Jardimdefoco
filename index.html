@@ -161,11 +161,6 @@ body.grid-10x10 .cell-3d {
     height: 40px !important;
 }
 
-body.grid-10x10 .emoji-3d {
-    font-size: 30px !important;
-    transform: rotateZ(-45deg) rotateX(-90deg) translateY(-15px) scaleY(1) !important;
-}
-
 /* Ajuste de altura para 3D 10x10 */
 body.grid-10x10 #jardim3D {
     height: 500px !important;
@@ -194,8 +189,7 @@ body.grid-10x10 #jardim3D {
     }
     
     body.grid-10x10 .emoji-3d {
-        font-size: 24px !important;
-        transform: rotateZ(-45deg) rotateX(-90deg) translateY(-12px) scaleY(1) !important;
+        transform: rotateZ(-45deg) rotateX(-90deg) translateY(calc(var(--cell-3d-size) * -0.46)) scaleY(1) !important;
     }
 }
 
@@ -222,8 +216,7 @@ body.grid-10x10 #jardim3D {
     }
     
     body.grid-10x10 .emoji-3d {
-        font-size: 35px !important;
-        transform: rotateZ(-45deg) rotateX(-90deg) translateY(-18px) scaleY(1) !important;
+        transform: rotateZ(-45deg) rotateX(-90deg) translateY(calc(var(--cell-3d-size) * -0.46)) scaleY(1) !important;
     }
 }
 
@@ -436,7 +429,8 @@ body.deep-focus-active #plantaFocoProfundo { font-size: 35vw; margin-bottom: 5vh
     background: var(--bg-body);
     padding: 15px;
     border-radius: 15px;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -1476,9 +1470,9 @@ h1 {
     transform: rotateY(90deg);
 }
 
-/* Emojis 3D */
+/* Emojis 3D - TAMANHO AJUSTADO PROPORCIONALMENTE */
 .emoji-3d {
-    font-size: calc(var(--cell-3d-size) * 0.6); /* Tamanho responsivo */
+    font-size: calc(var(--cell-3d-size) * 0.79); /* Tamanho responsivo e proporcional */
     pointer-events: none;
     display: block;
     user-select: none;
@@ -1540,11 +1534,6 @@ body.grid-10x10 .grid-container-3d {
         transform: rotateX(60deg) rotateZ(45deg) scale(0.9); /* Escala menor em mobile */
     }
     
-    .emoji-3d {
-        font-size: 9vw !important; /* Tamanho responsivo */
-        transform: rotateZ(-45deg) rotateX(-90deg) translateY(calc(var(--cell-3d-size) * -0.46)) scaleY(1) !important;
-    }
-    
     /* Grid 10x10 em mobile */
     body.grid-10x10 #jardim3D {
         height: 85vw;
@@ -1553,10 +1542,6 @@ body.grid-10x10 .grid-container-3d {
     
     body.grid-10x10 .grid-container-3d {
         transform: rotateX(60deg) rotateZ(45deg) scale(0.8) !important;
-    }
-    
-    body.grid-10x10 .emoji-3d {
-        font-size: 6vw !important;
     }
 }
 
@@ -1575,16 +1560,8 @@ body.grid-10x10 .grid-container-3d {
         transform: rotateX(60deg) rotateZ(45deg) scale(1);
     }
     
-    .emoji-3d {
-        font-size: 10vw !important;
-    }
-    
     body.grid-10x10 #jardim3D {
         height: 80vw;
-    }
-    
-    body.grid-10x10 .emoji-3d {
-        font-size: 7vw !important;
     }
 }
 
@@ -1605,11 +1582,6 @@ body.grid-10x10 .grid-container-3d {
         transform: rotateX(60deg) rotateZ(45deg) scale(1.1);
     }
     
-    .emoji-3d {
-        font-size: 12vw !important;
-        max-font-size: 73px;
-    }
-    
     /* Grid 10x10 em desktop */
     body.grid-10x10 #jardim3D {
         height: 65vw;
@@ -1618,11 +1590,6 @@ body.grid-10x10 .grid-container-3d {
     
     body.grid-10x10 .grid-container-3d {
         transform: rotateX(60deg) rotateZ(45deg) scale(1) !important;
-    }
-    
-    body.grid-10x10 .emoji-3d {
-        font-size: 8vw !important;
-        max-font-size: 35px;
     }
 }
 
@@ -1641,16 +1608,8 @@ body.grid-10x10 .grid-container-3d {
         transform: rotateX(60deg) rotateZ(45deg) scale(0.8);
     }
     
-    .emoji-3d {
-        font-size: 8vw !important;
-    }
-    
     body.grid-10x10 #jardim3D {
         height: 90vw;
-    }
-    
-    body.grid-10x10 .emoji-3d {
-        font-size: 5vw !important;
     }
 }
 
@@ -1949,7 +1908,7 @@ body.grid-10x10 .grid-container-3d {
         </div>
         
         <button onclick="resetAbsoluto()" style="width:100%; background:#c62828; color: white; margin-bottom:10px; border-radius: 14px; font-weight: bold;">⚠️ Reset Absoluto (Zerar Tudo)</button>
-        <div style="text-align: center; font-size: 10px; color: var(--text-secondary); margin-top: 15px;">Versão: 2.1.0</div>
+        <div style="text-align: center; font-size: 10px; color: var(--text-secondary); margin-top: 15px;">Versão: 2.1.2</div>
         <button onclick="fecharModal('configOverlay')" style="width:100%; margin-top:10px; background:#999; border-radius: 14px;">Fechar</button>
     </div>
 </div>
@@ -2616,19 +2575,19 @@ let estante = StorageSeguro.get('estante_livros', []);
 let sessoesTotais = StorageSeguro.get('sessoesTotais', 0);
 let historico = StorageSeguro.get('historico_foco', []);
 let totalMoedas = StorageSeguro.get('moedasFoco', 0);
-let streakDiasAtivos = StorageSeguro.get('streakDiasAtivos', 0);
+let streakDiasAtivos = StorageSeguro.set('streakDiasAtivos', 0);
 let luckyPlant = "";
 let notaTemp = 0;
 let corLivroTemp = CORES_LIVROS[0];
-let sinoAtivo = StorageSeguro.get('sinoAtivo', true);
-let temaAutomaticoAtivo = StorageSeguro.get('temaAutoAtivo', true);
-let mostrarAvisoInicio = StorageSeguro.get('mostrarAvisoInicio', true);
-let mostrarPrevisao = StorageSeguro.get('mostrarPrevisao', true);
-let modoDebugPlotsGrudados = StorageSeguro.get('modoDebugPlotsGrudados', false);
-let modo3D = StorageSeguro.get('modo3D', false);
-let aviso3DJaVisto = StorageSeguro.get('aviso3DJaVisto', false);
+let sinoAtivo = StorageSeguro.set('sinoAtivo', true);
+let temaAutomaticoAtivo = StorageSeguro.set('temaAutoAtivo', true);
+let mostrarAvisoInicio = StorageSeguro.set('mostrarAvisoInicio', true);
+let mostrarPrevisao = StorageSeguro.set('mostrarPrevisao', true);
+let modoDebugPlotsGrudados = StorageSeguro.set('modoDebugPlotsGrudados', false);
+let modo3D = StorageSeguro.set('modo3D', false);
+let aviso3DJaVisto = StorageSeguro.set('aviso3DJaVisto', false);
 // NOVO: Modo grid 10x10
-let grid10x10 = StorageSeguro.get('grid10x10', false);
+let grid10x10 = StorageSeguro.set('grid10x10', false);
 
 // =========================
 // FUNÇÕES DE PERSISTÊNCIA DO TIMER - CORRIGIDAS
@@ -3496,7 +3455,7 @@ function confirmarFocoManual() {
 
 function exportarDados() {
     const dadosBackup = {
-        versao: '2.1.0',
+        versao: '2.1.2',
         dataExportacao: new Date().toISOString(),
         dados: {
             jardim: StorageSeguro.get('jardim', []),
@@ -4441,6 +4400,27 @@ function renderizarDashboardAnual() {
     
     const maxMinutos = Math.max(...minutosPorMes, 1000);
     
+    // 1. Primeiro adicionar os meses (gráficos)
+    meses.forEach((mesNome, index) => {
+        const minutos = minutosPorMes[index];
+        const porcentagem = Math.min((minutos / maxMinutos) * 100, 100);
+        const isMesAtual = index === agora.getMonth();
+        
+        const mesElement = document.createElement('div');
+        mesElement.className = 'dia-semana';
+        
+        mesElement.innerHTML = `
+            <div class="dia-label">${mesNome}</div>
+            <div class="dia-barra-container">
+                <div class="dia-barra ${isMesAtual ? 'hoje' : ''}" style="width: ${porcentagem}%"></div>
+                <div class="dia-valor">${minutos} min</div>
+            </div>
+        `;
+        
+        container.appendChild(mesElement);
+    });
+    
+    // 2. Depois adicionar o resumo
     const totalAno = minutosPorMes.reduce((a, b) => a + b, 0);
     const mesesAtivos = minutosPorMes.filter(m => m > 0).length;
     const mediaMensal = mesesAtivos > 0 ? Math.round(totalAno / mesesAtivos) : 0;
@@ -4464,25 +4444,7 @@ function renderizarDashboardAnual() {
     
     container.innerHTML += resumoHTML;
     
-    meses.forEach((mesNome, index) => {
-        const minutos = minutosPorMes[index];
-        const porcentagem = Math.min((minutos / maxMinutos) * 100, 100);
-        const isMesAtual = index === agora.getMonth();
-        
-        const mesElement = document.createElement('div');
-        mesElement.className = 'dia-semana';
-        
-        mesElement.innerHTML = `
-            <div class="dia-label">${mesNome}</div>
-            <div class="dia-barra-container">
-                <div class="dia-barra ${isMesAtual ? 'hoje' : ''}" style="width: ${porcentagem}%"></div>
-                <div class="dia-valor">${minutos} min</div>
-            </div>
-        `;
-        
-        container.appendChild(mesElement);
-    });
-    
+    // 3. Por último a seção "Mais usado"
     const sessoesAno = historico.filter(s => {
         if (s.status !== 'sucesso') return false;
         const dataSessao = new Date(s.data);
@@ -4514,6 +4476,7 @@ function renderizarDashboardAnual() {
     
     container.innerHTML += maisUsadoHTML;
     
+    // Animar as barras
     setTimeout(() => {
         container.querySelectorAll('.dia-barra').forEach((barra, index) => {
             const minutos = minutosPorMes[index];
