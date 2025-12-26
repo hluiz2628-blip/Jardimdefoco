@@ -1,4 +1,4 @@
-const CACHE_NAME = 'garden-focus-v2.3.5'; // Aumente o número aqui para testar
+const CACHE_NAME = 'garden-focus-v2.3.4'; // Aumente o número aqui para testar
 
 // Instalação do Service Worker
 self.addEventListener('install', (event) => {
