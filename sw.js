@@ -37,3 +37,21 @@ self.addEventListener('fetch', (e) => {
     })
   );
 });
+// No seu arquivo sw.js, adicione este evento
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Notifica a página quando uma nova versão está pronta
+self.addEventListener('statechange', function() {
+  if (self.state === 'activated') {
+    // Envia mensagem para todas as páginas controladas
+    self.clients.matchAll().then(clients => {
+      clients.forEach(client => {
+        client.postMessage({ type: 'UPDATE_AVAILABLE' });
+      });
+    });
+  }
+});
