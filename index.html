@@ -9609,7 +9609,49 @@ document.addEventListener('visibilitychange', function() {
         console.log('Aba em segundo plano');
     }
 });
+<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
 
+<style>
+  /* 1. O SEGREDO: Deixa o texto invisível onde tiver emoji nativo */
+  /* Isso evita que o emoji "feio" apareça antes da troca */
+  body {
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 2. Garante o tamanho correto e fixo */
+  img.emoji {
+     display: inline-block !important;
+     height: 1em !important;
+     width: 1em !important;
+     margin: 0 .1em !important;
+     vertical-align: -0.1em !important;
+  }
+</style>
+
+<script>
+  // Função que faz a troca
+  function fixEmojis() {
+    twemoji.parse(document.body, {
+      folder: 'svg',
+      ext: '.svg'
+    });
+  }
+
+  // Roda assim que o HTML carregar
+  document.addEventListener('DOMContentLoaded', fixEmojis);
+
+  // Vigia mudanças e troca NA HORA, sem atraso (delay)
+  const observer = new MutationObserver((mutations) => {
+    // Desconecta o vigia rapidinho para não entrar em loop infinito
+    observer.disconnect();
+    
+    fixEmojis();
+    
+    // Conecta de novo
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 </script>
 </body>
 </html>
