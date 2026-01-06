@@ -1,4 +1,4 @@
-const CACHE_NAME = 'garden-focus-v5.2.7'; // Sempre mude isso ao subir nova versão
+const CACHE_NAME = 'garden-focus-v5.2.8'; // Sempre mude isso ao subir nova versão
 
 self.addEventListener('install', () => {
   self.skipWaiting(); // força ativação imediata
